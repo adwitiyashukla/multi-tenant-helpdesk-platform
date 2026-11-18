@@ -25,6 +25,7 @@ export default defineConfig({
     env: {
       NODE_ENV: 'test',
       DATABASE_URL: testDatabaseUrl,
+      WEB_ORIGIN: 'http://localhost:3000',
       SESSION_SECRET: 'test_session_secret_value_32_chars',
       INBOUND_EMAIL_SECRET: 'test_inbound_secret',
       INBOUND_EMAIL_DOMAIN: 'inbox.test',
