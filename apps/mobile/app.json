@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "helpdesk",
+    "slug": "helpdesk",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "helpdesk",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "dev.helpdesk.app"
+    },
+    "android": {
+      "package": "dev.helpdesk.app",
+      "edgeToEdgeEnabled": true
+    },
+    "plugins": ["expo-router", "expo-secure-store"],
+    "extra": {
+      "apiUrl": "http://localhost:4000"
+    }
+  }
+}

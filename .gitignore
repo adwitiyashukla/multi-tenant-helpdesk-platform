@@ -1,0 +1,16 @@
+node_modules
+dist
+.next
+.expo
+.turbo
+coverage
+playwright-report
+test-results
+bench/results
+.env
+.env.local
+*.log
+.DS_Store
+*.tsbuildinfo
+next-env.d.ts
+.expo-export
