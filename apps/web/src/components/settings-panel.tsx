@@ -59,8 +59,8 @@ export function SettingsPanel() {
           </div>
           <div>
             <dt className="text-xs text-slate-500 dark:text-slate-400">Plan</dt>
-            <dd className="mt-0.5 font-medium capitalize">
-              {session.organization.plan}
+            <dd className="mt-0.5 font-medium">
+              <span className="capitalize">{session.organization.plan}</span>
               <span className="ml-2 text-xs font-normal text-slate-500">
                 {session.organization.seatsUsed} of {session.organization.seatLimit} seats
               </span>

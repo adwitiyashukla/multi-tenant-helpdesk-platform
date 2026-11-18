@@ -14,6 +14,7 @@ export function useRealtime(activeConversationId: string | null) {
   const [typing, setTyping] = useState<TypingState | null>(null);
   const [connected, setConnected] = useState(false);
   const socketRef = useRef<WebSocket | null>(null);
+  const selfRef = useRef<string | null>(null);
 
   useEffect(() => {
     const socket = new WebSocket(wsUrl);
@@ -25,11 +26,18 @@ export function useRealtime(activeConversationId: string | null) {
     socket.onmessage = (raw) => {
       const event = JSON.parse(raw.data as string) as ServerEvent;
 
+      if (event.type === 'ready') {
+        selfRef.current = event.userId;
+        return;
+      }
       if (event.type === 'presence') {
         setPresence(event.users);
         return;
       }
       if (event.type === 'typing') {
+        if (event.userId === selfRef.current) {
+          return;
+        }
         setTyping({ conversationId: event.conversationId, name: event.name, at: Date.now() });
         return;
       }

@@ -4,6 +4,21 @@ A shared support inbox for small teams. Customer emails land as conversations, a
 reply or leave internal notes, and every open ticket runs against an SLA clock. Built as a full
 stack project with a Next.js web app, an Expo mobile app, and one Fastify API behind both.
 
+## Screenshots
+
+The shared inbox with a conversation open. Customer messages are white, agent replies are dark, and
+internal notes are yellow and only visible to the team.
+
+![Shared inbox with a conversation open](screenshots/inbox.png)
+
+The analytics page for the seeded demo workspace.
+
+![Analytics page](screenshots/analytics.png)
+
+Workspace settings with the team, the inbound email address, and tag usage.
+
+![Settings page](screenshots/settings.png)
+
 ## What it does
 
 - Sign up creates a workspace with its own inbound email address, tags, and canned replies

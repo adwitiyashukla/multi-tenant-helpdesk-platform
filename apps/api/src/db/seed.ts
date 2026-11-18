@@ -1,4 +1,5 @@
 import { randomUUID } from 'node:crypto';
+import { planLimits } from '@helpdesk/contracts';
 import { eq, sql } from 'drizzle-orm';
 import { hashPassword } from '../lib/password.js';
 import { uniqueSlug } from '../lib/slug.js';
@@ -118,7 +119,13 @@ async function run() {
 
   const [organization] = await db
     .insert(schema.organizations)
-    .values({ name: 'Northwind Support', slug: uniqueSlug('Northwind Support') })
+    .values({
+      name: 'Northwind Support',
+      slug: uniqueSlug('Northwind Support'),
+      plan: 'pro',
+      seatLimit: planLimits.pro.seats,
+      subscriptionStatus: 'active',
+    })
     .returning();
 
   const agentRows = [
@@ -176,7 +183,7 @@ async function run() {
     const createdAt = new Date(now - randomInt(windowMs));
     const ticket = pick(tickets, index);
     const priority = pick(priorities, index + randomInt(5));
-    const agent = users[1 + ((index * 7 + 1) % (users.length - 1))]!;
+    const agent = users[1 + (Math.floor(index / 3) % (users.length - 1))]!;
 
     const respondedAt = new Date(createdAt.getTime() + (5 + randomInt(240)) * 60 * 1000);
     const answered = index % 10 !== 0 && respondedAt.getTime() <= now;
@@ -231,7 +238,10 @@ async function run() {
     }
 
     if (index % 2 === 0 && tagRows.length > 0) {
-      conversationTags.push({ conversationId: id, tagId: pick(tagRows, index).id });
+      conversationTags.push({
+        conversationId: id,
+        tagId: pick(tagRows, Math.floor(index / 2)).id,
+      });
     }
   }
 

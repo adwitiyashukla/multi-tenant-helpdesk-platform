@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { NewConversationDialog } from '@/components/new-conversation-dialog';
+import { useSession } from '@/components/providers';
 import { useRealtimeContext } from '@/components/realtime-provider';
 import { Avatar } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
@@ -37,6 +38,7 @@ export function ConversationList() {
   const router = useRouter();
   const routeParams = useParams<{ id?: string }>();
   const { presence } = useRealtimeContext();
+  const session = useSession();
 
   const [search, setSearch] = useState(params.get('q') ?? '');
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -159,7 +161,9 @@ export function ConversationList() {
         {items.map((conversation) => {
           const sla = countdown(conversation.slaDueAt, conversation.slaBreachedAt);
           const active = routeParams.id === conversation.id;
-          const watchers = presence.filter((user) => user.viewing === conversation.id);
+          const watchers = presence.filter(
+            (user) => user.viewing === conversation.id && user.id !== session.user.id,
+          );
 
           return (
             <Link
